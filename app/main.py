@@ -28,10 +28,10 @@ def elevations():
         SELECT JSON_BUILD_OBJECT(
             'type', 'FeatureCollection',
             'features', JSON_AGG(
-                ST_AsGeoJSON(interpolated_elevation.*)::json
+                ST_AsGeoJSON(month_normal.*)::json
             )
         )
-        FROM interpolated_elevation
+        FROM month_normal
         LIMIT 10;
         """
 
