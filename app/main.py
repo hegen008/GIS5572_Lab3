@@ -32,7 +32,6 @@ def elevations():
             )
         )
         FROM month_normal
-        LIMIT 10;
         """
 
         cur.execute(query)
