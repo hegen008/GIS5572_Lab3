@@ -31,7 +31,8 @@ def elevations():
                 ST_AsGeoJSON(interpolated_elevation.*)::json
             )
         )
-        FROM interpolated_elevation;
+        FROM interpolated_elevation
+        LIMIT 10;
         """
 
         cur.execute(query)
