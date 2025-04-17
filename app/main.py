@@ -51,7 +51,7 @@ def elevations():
 
 # Create the data route
 @app.route("/temperature", methods=["GET"])
-def elevations():
+def temperature():
     return database_to_geojson("interpolated_temp")
 
 if __name__ == "__main__":
