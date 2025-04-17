@@ -47,7 +47,7 @@ def database_to_geojson(table_name):
 # Create the data route
 @app.route("/elevations", methods=["GET"])
 def elevations():
-    return database_to_geojson("interpolated_elevations")
+    return database_to_geojson("interpolated_elevation")
 
 # Create the data route
 @app.route("/temperature", methods=["GET"])
