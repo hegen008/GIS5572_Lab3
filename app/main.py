@@ -30,7 +30,7 @@ def database_to_geojson(table_name):
                 ST_AsGeoJSON({table_name}.*)::json
             )
         )
-        FROM month_normal
+        FROM {table_name}
         """
 
         cur.execute(query)
