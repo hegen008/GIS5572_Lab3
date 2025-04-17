@@ -10,9 +10,8 @@ app = Flask(__name__)
 def index():
     return "The API is working"
 
-# Create the data route
-@app.route("/elevations", methods=["GET"])
-def elevations():
+# Create a general DB to GeoJSON function
+def database_to_geojson(table_name):
     # Create a connection to the database
     conn = psycopg2.connect(
         host = os.environ.get("DB_HOST"),
@@ -24,11 +23,11 @@ def elevations():
 
     # Execute a query to retrieve the data
     with conn.cursor() as cur:
-        query = """
+        query = f"""
         SELECT JSON_BUILD_OBJECT(
             'type', 'FeatureCollection',
             'features', JSON_AGG(
-                ST_AsGeoJSON(month_normal.*)::json
+                ST_AsGeoJSON({table_name}.*)::json
             )
         )
         FROM month_normal
@@ -43,6 +42,19 @@ def elevations():
 
     # Returning the data
     return data[0][0]
+
+
+# Create the data route
+@app.route("/elevations", methods=["GET"])
+def elevations():
+    data = database_to_geojson("interpolated_elevations")
+    return data
+
+# Create the data route
+@app.route("/temperature", methods=["GET"])
+def elevations():
+    data = database_to_geojson("interpolated_temp")
+    return data
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
